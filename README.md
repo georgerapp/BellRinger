@@ -8,4 +8,4 @@ In the Chatwee room (at publication time, https://client.chatwee.com/popout/5bda
 
 This PowerShell script requires that the Chatwee room be pulled up in a browser tab titled Chat. The script draws a dialog box with two buttons (Ring It! and Stop The Ringing, which exits the dialog) and a Bell Count text box that starts at 1 but can be updated. When John mentions Chuck Todd, the user clicks "Ring It!", which injects the text " : b e l l : x", followed by the Bell Count after a 750ms delay, and increments the Bell Count. This is an effective way to keep track of the Chuck Todd mentions when they happen in rapid succession.
 
-Invoke the script via "powershell .\bell.ps1" in the directory in which the bell.ps1 file was downloaded.
+Invoke the script in a Command Prompt window via "powershell .\bell.ps1" in the directory in which the bell.ps1 file was downloaded.
