@@ -29,7 +29,7 @@ $form.Controls.Add($stopButton);
 $label = New-Object System.Windows.Forms.Label
 $label.Location = New-Object System.Drawing.Point(160,20)
 $label.Size = New-Object System.Drawing.Size(280,35)
-$label.Text = 'Bell Count'
+$label.Text = 'Next Bell'
 $form.Controls.Add($label)
 
 $textBox = New-Object System.Windows.Forms.TextBox;
@@ -38,6 +38,8 @@ $textBox.AutoSize = $True;
 #$textBox.Size = New-Object System.Drawing.Size(400,40);
 $textBox.Font = New-Object System.Drawing.Font("Arial", 12);
 $form.Controls.Add($textBox);
+
+$digits = ':zero:',':one:',':two:',':three:',':four:',':five:',':six:',':seven:',':eight:',':nine:'
 
 $bells = 1;
 $wshell = New-Object -ComObject wscript.shell;
@@ -51,13 +53,31 @@ do {
     }
     $bells = [int64]$textBox.Text;
 
-    $str = ':bell: x' + $bells.ToString('#') + "~";
+    $emoji = @()
+	$belldivisor = $bells
+	$power = 0
+    while($belldivisor -gt 0) {
+		$dividend = [Math]::Pow(10, $power)
+		$modulo = $belldivisor % ($dividend * 10)
+		$digitindex = [int64] $modulo / $dividend
+		$emoji += $digits[$digitindex]
+		$belldivisor = $belldivisor - $modulo
+		$power++
+	}
+    $emostring = ''
+    for($i = $emoji.count - 1; $i -ge 0; $i--) {
+		$emostring = $emostring + $emoji[$i] + ' '
+	}
+    $str = ':bell: :heavy_multiplication_x: ' + $emostring + "~"
+
+#    $str = ':bell: x' + $bells.ToString('#') + "~";
 
     Start-Sleep -Milliseconds 750
     $wshell.AppActivate('Chat');
 #    $wshell.SendKeys("$str");
     [System.Windows.Forms.SendKeys]::SendWait($str);
-
+#    [System.Windows.Forms.SendKeys]::SendWait("text goes here ~");
+#    $form.text = $str
     $bells++;
     $wshell.AppActivate('Untitled - Notepad');
 } while (1)
